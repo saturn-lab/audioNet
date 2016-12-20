@@ -54,7 +54,7 @@ def predictAction():
             if command_exists('ffmpeg'):
                 ffmpeg_cmd = 'ffmpeg -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
                 os.system(ffmpeg_cmd)
-                res = predict(fullpath + '.wav', '/home/ubuntu/audioNet/models/save_14.h5')
+                res = predict(fullpath + '.wav', './models/save_14.h5')
             else:
                 flash('Unable to find ffmpeg, please install ffmpeg')
                 return redirect(request.url)
