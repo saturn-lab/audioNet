@@ -66,7 +66,7 @@ def predictAction():
     <title>audioNet Predict</title>
     <h1>Upload audio for predict</h1>
     <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
+      <p><input type=file name=file accept='audio/*' capture>
          <input type=submit value=Upload>
     </form>
     '''
