@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import socket
-import os
+import os, stat
 import numpy
 import time
 import select
@@ -27,9 +27,15 @@ def _recvall(r, length):
 
     return data
 
-def sockDataGenerator(path='./train.sock'):
+def sockDataGeneratorOrigin(path='./train.sock'):
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    os.system('rm -rf ' + path)
+    
+    if os.path.exists(path):
+        mode = os.stat(path).st_mode
+        if stat.S_ISSOCK(mode):
+            os.system('rm -rf ' + path)
+        else:
+            raise ValueError(path + ' is an existing regular file.')
     s.bind(path)
     s.listen(5)
     
@@ -57,8 +63,13 @@ def sockDataGenerator(path='./train.sock'):
                         d = d.reshape([1, -1, 1, 1])
                         L = numpy.zeros([1, 24], dtype=numpy.float32)
                         L[0][dL[0]] = 1.0
-                        yield d, L
+                        yield d, L, r
 
+def sockDataGenerator(path='./train.sock'):
+    dg = sockDataGeneratorOrigin(path)
+    while True:
+        d, L, r = dg.next()
+        yield d, L
 
 
 if __name__ == '__main__':
