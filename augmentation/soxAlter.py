@@ -4,6 +4,7 @@
 import pysox as ps
 import os
 from  random import random, randint
+import sys
 
 EF_RATE=0.6
 
@@ -82,4 +83,8 @@ def soxAlter(filename, outname):
 
 if __name__ == '__main__':
     os.system('rm ./tmp/*')
-    soxAlter('/home/saturn/ds/data2/bluetooth/total/0001/a.mp3')
+    if len(sys.argv) < 2:
+        din = '/home/saturn/ds/data2/bluetooth/train/raw/2003880056/k.mp3'
+    else:
+        din = sys.argv[1]
+    soxAlter(din, './test.wav')

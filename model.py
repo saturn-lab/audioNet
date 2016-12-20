@@ -3,25 +3,62 @@
 import tensorflow as tf
 import numpy
 from sockDataGenerator import sockDataGenerator
-from fourierWeight import fourierWeight
+from fourierWeight import fourierLayer, fourierLayerShape, fourierWeight
 
-def model():
-    datain = tf.placeholder(tf.float32, [None, None, 1, 1])
-    sinW, cosW = fourierWeight(1000, 4)
-    
-    sin = tf.nn.conv2d(datain, sinW, [1,100,1,1], padding='VALID')
-    cos = tf.nn.conv2d(datain, cosW, [1,100,1,1], padding='VALID')
-    
-    spc = tf.complex(cos, sin)
-    dataout = tf.complex_abs(spc)
+from keras.models import Model
+from keras.regularizers import l2
+from keras.optimizers import Adam
+from keras.layers import (
+    Input, 
+    Dense, 
+    Convolution2D, 
+    Lambda, 
+    Activation, 
+    Flatten,
+    Dropout,
+    Bidirectional,
+    LSTM,
+    Reshape,
+    TimeDistributed
+)
 
-    dg = sockDataGenerator()
-    with tf.Session() as sess:
-        tf.initialize_all_variables().run()
-        for i in xrange(0, 1):
-            label, data = dg.next()
-            do = sess.run(dataout, feed_dict={datain: data})
-            numpy.save('./out.npy', do)
+DROP_RATE=0.5
+L2_RATE=0.0001
+
+def KerasModel():
+    In = Input(shape=(None, 1, 1))
+    x = Lambda(fourierLayer, output_shape=fourierLayerShape)(In)
+    x = Convolution2D(32, 7, 7, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(64, 7, 5, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(64, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(32, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    
+    freq, chan = x.get_shape()[2:4]
+    x = TimeDistributed(Reshape([int(freq)*int(chan)]))(x)
+    
+    x = Bidirectional(LSTM(128, ))(x)
+    
+    #x = Dropout(DROP_RATE)(x)
+    x = Dense(64, activation='relu')(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Dense(24, activation='softmax')(x)
+    
+    model = Model(input=In, output=x)
+    
+    opt = Adam(1e-4)
+
+    model.compile(
+        optimizer=opt,
+        loss='categorical_crossentropy',
+        metrics=['accuracy'],
+    )
+
+    return model
 
 if __name__ == '__main__':
-    model()
+    #model()
+    KerasModel()
