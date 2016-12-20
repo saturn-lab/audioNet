@@ -50,17 +50,15 @@ def predictAction():
             fullpath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(fullpath)  # save the uploaded file
             # check if file is wav
-            if filename.rsplit('.', 1)[1] != 'wav':
-                if command_exists('ffmpeg'):
-                    ffmpeg_cmd = 'ffmpeg -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
-                    os.system(ffmpeg_cmd)
-                    res = predict(fullpath + '.wav', '/home/ubuntu/audioNet/models/save_14.h5')
-                else:
-                    flash('Unable to find ffmpeg, please install ffmpeg')
-                    return redirect(request.url)
+            
+            if command_exists('ffmpeg'):
+                ffmpeg_cmd = 'ffmpeg -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
+                os.system(ffmpeg_cmd)
+                res = predict(fullpath + '.wav', '/home/ubuntu/audioNet/models/save_14.h5')
             else:
-                # run predict
-                res = predict(fullpath, '/home/ubuntu/audioNet/models/save_14.h5')
+                flash('Unable to find ffmpeg, please install ffmpeg')
+                return redirect(request.url)
+            
             return str(res)
 
     return '''
