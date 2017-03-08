@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/opt/anaconda3/bin/python
 # -*- coding:utf-8 -*-
 
 import os, sys, subprocess
@@ -103,4 +103,4 @@ def predictAction():
 if __name__ == "__main__" :
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)

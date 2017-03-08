@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
 
 import numpy
 import glob

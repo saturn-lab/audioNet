@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
 
 import tensorflow as tf
 import numpy
@@ -25,7 +25,7 @@ from keras.layers import (
 DROP_RATE=0.5
 L2_RATE=0.0001
 
-def KerasModel():
+def KerasModel(isCompile=True):
     In = Input(shape=(None, 1, 1))
     x = Lambda(fourierLayer, output_shape=fourierLayerShape)(In)
     x = Convolution2D(32, 7, 7, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
@@ -49,13 +49,13 @@ def KerasModel():
     
     model = Model(input=In, output=x)
     
-    opt = Adam(1e-4)
-
-    model.compile(
-        optimizer=opt,
-        loss='categorical_crossentropy',
-        metrics=['accuracy'],
-    )
+    if isCompile:
+        opt = Adam(1e-4)
+        model.compile(
+            optimizer=opt,
+            loss='categorical_crossentropy',
+            metrics=['accuracy'],
+        )
 
     return model
 

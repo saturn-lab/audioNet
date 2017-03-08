@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 import socket
@@ -11,10 +11,9 @@ from random import randint
 
 from wavReader import readWav, parseName
 
-from soxAlter import soxAlter
 from backgroundAlter import bgnAlter
 
-import Queue
+import queue
 import threading
 
 
@@ -27,8 +26,7 @@ def _enQueueData(dpath, alter, Q):
         f = flist[randint(0, len(flist) - 1)]
         label = parseName(f)
         if alter:
-            soxAlter(f, outf)
-            sps, data = readWav(outf)
+            sps, data = readWav(f)
             bgnAlter(data)
         else:
             sps, data = readWav(f)
@@ -37,7 +35,7 @@ def _enQueueData(dpath, alter, Q):
 
 # 创建线程，返回线程和队列
 def _dataThreadOn(dpath, alter=True, maxQ=128):
-    Q = Queue.Queue(maxQ)
+    Q = queue.Queue(maxQ)
     thrd = threading.Thread(target=_enQueueData, args = (dpath, alter, Q))
     thrd.start()
     return thrd, Q
@@ -64,9 +62,10 @@ def startAlterShipping(sock_addr='../data.sock', glob_string='/home/saturn/ds/da
             label, data = Q.get()
             label = numpy.array([label, data.shape[0]], dtype=numpy.uint32)
             e = _sendall(s, label.tostring() + data.tostring())
+            print('data over')
             Q.task_done()
     except:
-        print 'Out'
+        print('Out')
         s.close()
         thrd.running = False
         _, _ = Q.get()
@@ -76,9 +75,9 @@ def startAlterShipping(sock_addr='../data.sock', glob_string='/home/saturn/ds/da
 if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
-        print 'train'
-        startAlterShipping('../train.sock', '/home/saturn/ds/data2/bluetooth/train/wav/*.wav')
+        print('train')
+        startAlterShipping('../train.sock', '/home/saturn/storage/dataD/bluetooth/train/wav/*.wav')
     else:
-        print 'test'
-        startAlterShipping('../test.sock', '/home/saturn/ds/data2/bluetooth/test/wav/*.wav')
+        print('test')
+        startAlterShipping('../test.sock', '/home/saturn/storage/dataD/bluetooth/test/wav/*.wav')
     

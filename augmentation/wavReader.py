@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
 
 import argparse
 import os
@@ -19,11 +19,11 @@ class Format:
         self.bps = numpy.frombuffer(buf[28:32], dtype=numpy.uint32)[0]
     
 def _parseData(buf):
-    if buf[0:4] != 'RIFF':
+    if buf[0:4] != b'RIFF':
         raise ValueError('"RIFF" header is missing')
-    if buf[8:12] != 'WAVE':
+    if buf[8:12] != b'WAVE':
         raise ValueError('"WAVE" header is missing')
-    if buf[12:16] != 'fmt ':
+    if buf[12:16] != b'fmt ':
         raise ValueError('"fmt " header is missing')
     fmt = Format(buf)
     itr = 12 + fmt.size + 8
@@ -31,11 +31,11 @@ def _parseData(buf):
     while(itr < len(buf)):
         riffid = buf[itr:itr+4]
         size = numpy.frombuffer(buf[itr+4:itr+8], dtype=numpy.uint32)[0]
-        if riffid != 'data':
+        if riffid != b'data':
             itr += 8 + size
         else:
             break
-    if riffid != 'data':
+    if riffid != b'data':
         raise ValueError('"data" header is missing')
 
     data = numpy.frombuffer(buf[itr + 8: itr + 8 + size], dtype=numpy.float32)
@@ -69,7 +69,7 @@ def numpyToWav(data, fname):
     itr = 12
     while True:
         riffid = template[itr:itr+4]
-        if riffid != 'data':
+        if riffid != b'data':
             itr += 4
             itr += numpy.fromstring(template[itr:itr+4], dtype=numpy.uint32)[0]
             itr += 4
@@ -87,8 +87,8 @@ def numpyToWav(data, fname):
     itr += 4
     F[itr:itr + 4] = numpy.fromstring(numpy.array([len(data)*4], dtype=numpy.uint32).tostring(), dtype=numpy.uint8)
     itr += 4
-    print F.shape - itr
-    print data.dtype
+    print(F.shape - itr)
+    print(data.dtype)
     F[itr:] = numpy.fromstring(data.tostring(), dtype=numpy.uint8)
     with open(fname, 'wb') as f:
         f.write(F.tostring())

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
 import sys
 import numpy
 
@@ -14,7 +14,7 @@ def startPredict(modelfile):
     
     dg = sockDataGeneratorOrigin('./pred.sock')
     
-    modelA = KerasModel()
+    modelA = KerasModel(False)
     modelA.load_weights(modelfile)
     
     while True:

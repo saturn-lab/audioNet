@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
+
 import numpy
 from keras import backend as K
 
@@ -17,7 +18,7 @@ def fourierWeight(length, fraction=16.0):
     cosines = numpy.cos(w)/length
 
     # para-curve window  f(0) = 0; f(n-1) = 0;  f((n-1)/2) = 1
-    window = numpy.array(xrange(0, length), dtype=numpy.float32)
+    window = numpy.array(range(0, length), dtype=numpy.float32)
     window = numpy.reshape(window, [length, 1])
     window = (window * 4.0 / (length - 1)) - numpy.multiply(window, window) * 4.0 / ((length - 1) * (length - 1))
     window = window.astype(numpy.float32)

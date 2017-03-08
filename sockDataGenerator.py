@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/anaconda3/bin/python
 
 import socket
 import os, stat
@@ -60,21 +60,34 @@ def sockDataGeneratorOrigin(path='./train.sock'):
                     else:
                         data = _recvall(r, dL[1] * 4)
                         d = numpy.fromstring(data, dtype=numpy.float32)
-                        d = d.reshape([1, -1, 1, 1])
-                        L = numpy.zeros([1, 24], dtype=numpy.float32)
-                        L[0][dL[0]] = 1.0
+                        d = d.reshape([-1])
+                        L = numpy.zeros([24], dtype=numpy.float32)
+                        L[dL[0]] = 1.0
                         yield d, L, r
 
-def sockDataGenerator(path='./train.sock'):
+def sockDataGenerator(path='./train.sock', batchSize = 16):
     dg = sockDataGeneratorOrigin(path)
     while True:
-        d, L, r = dg.next()
-        yield d, L
+        dlist = []
+        ret_L = numpy.zeros([batchSize, 24], dtype = numpy.float32)
+        for i in range(0, batchSize):
+            d, L, _ = next(dg)
+            dlist.append(d)
+            ret_L[i, :] = L
+
+        lengthes = [d.shape[0] for d in dlist]
+        ret_d = numpy.zeros([batchSize, max(lengthes)], dtype=numpy.float32)
+
+        for i, d in enumerate(dlist):
+            ret_d[i, 0:lengthes[i]] = d
+        
+        ret_d = ret_d.reshape(batchSize, -1, 1, 1)
+        yield ret_d, ret_L
 
 
 if __name__ == '__main__':
     gen = sockDataGenerator()
-    for i in xrange(0, 100):
-        label, d = gen.next()
-        print i, label
+    for i in range(0, 100):
+        label, d = next(gen)
+        print(i, label)
         time.sleep(1)
