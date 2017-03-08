@@ -8,8 +8,8 @@ from sockDataGenerator import sockDataGenerator
 def train(sp=-1):
     model = KerasModel()
     
-    train = sockDataGenerator('train.sock',  50)
-    test = sockDataGenerator('test.sock', 32)
+    train = sockDataGenerator(9009,  50)
+    test = sockDataGenerator(9090, 32)
     next(train)
     next(test)
     print('socket esteblish')

@@ -51,9 +51,9 @@ def _sendall(s, data):
     return None
 
 # 主要函数，创建一个socket，向sock_addr发送数据，并且负责IO线程的管理
-def startAlterShipping(sock_addr='../data.sock', glob_string='/home/saturn/ds/data2/bluetooth/train/wav/*.wav', alter=True):
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.connect(sock_addr)
+def startAlterShipping(port, glob_string='/home/saturn/ds/data2/bluetooth/train/wav/*.wav', alter=True):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('localhost', port))
 
     thrd, Q = _dataThreadOn(glob_string, alter=alter, maxQ=64)
     
@@ -76,8 +76,8 @@ if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
         print('train')
-        startAlterShipping('../train.sock', '/home/saturn/storage/dataD/bluetooth/train/wav/*.wav')
+        startAlterShipping(9009, '/home/saturn/storage/dataD/bluetooth/train/wav/*.wav')
     else:
         print('test')
-        startAlterShipping('../test.sock', '/home/saturn/storage/dataD/bluetooth/test/wav/*.wav')
+        startAlterShipping(9090, '/home/saturn/storage/dataD/bluetooth/test/wav/*.wav')
     

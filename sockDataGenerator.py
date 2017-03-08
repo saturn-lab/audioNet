@@ -27,16 +27,10 @@ def _recvall(r, length):
 
     return data
 
-def sockDataGeneratorOrigin(path='./train.sock'):
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+def sockDataGeneratorOrigin(port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
-    if os.path.exists(path):
-        mode = os.stat(path).st_mode
-        if stat.S_ISSOCK(mode):
-            os.system('rm -rf ' + path)
-        else:
-            raise ValueError(path + ' is an existing regular file.')
-    s.bind(path)
+    s.bind(('', port))
     s.listen(5)
     
     inputs = [s]
@@ -65,8 +59,8 @@ def sockDataGeneratorOrigin(path='./train.sock'):
                         L[dL[0]] = 1.0
                         yield d, L, r
 
-def sockDataGenerator(path='./train.sock', batchSize = 16):
-    dg = sockDataGeneratorOrigin(path)
+def sockDataGenerator(port, batchSize = 16):
+    dg = sockDataGeneratorOrigin(port)
     while True:
         dlist = []
         ret_L = numpy.zeros([batchSize, 24], dtype = numpy.float32)
