@@ -26,8 +26,10 @@ def _enQueueData(dpath, alter, Q):
         f = flist[randint(0, len(flist) - 1)]
         label = parseName(f)
         if alter:
+            # Alter file 'f' to 'outf' for file-level transform
             sps, data = readWav(f)
             bgnAlter(data)
+            # in-memory transform
         else:
             sps, data = readWav(f)
         data = data[1:] - data[0:len(data) - 1] # Z 变换
