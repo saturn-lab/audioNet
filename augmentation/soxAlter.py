@@ -6,7 +6,7 @@ from  random import random, randint
 import sys
 
 EF_RATE=0.6
-SOX_DIR='.\\sox\\sox.exe'
+SOX_PATH='.\\sox\\sox.exe'
 
 def _pitch():
     chain = ' '
@@ -54,7 +54,7 @@ def _norm():
 
 def soxAlter(filename, outname):
     chain = ' %s -c 1 -r 11025 -b 16 %s'%(filename, outname)
-    chain = SOX_DIR + chain
+    chain = SOX_PATH + chain
     
     chain += _pitch()
     chain += _tempo()
