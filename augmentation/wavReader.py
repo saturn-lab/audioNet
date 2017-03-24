@@ -37,7 +37,6 @@ def _parseData(buf):
             break
     if riffid != b'data':
         raise ValueError('"data" header is missing')
-
     data = numpy.frombuffer(buf[itr + 8: itr + 8 + size], dtype=numpy.float32)
     return fmt.sps, data
 
@@ -60,7 +59,7 @@ def parseName(filename): # ./xx/yy/10000_12.wav
     except:
         label = -1
     if(label < 0 or label > 23):
-        label = -1
+        raise ValueError(filename)
     return label
 
 def numpyToWav(data, fname):
@@ -99,6 +98,7 @@ if __name__ == '__main__':
     #args = parse.parse_args()
     
     ######  HERE  #######
-    sps, data = readWav('./test.wav')
-    sps2, data2 = readWav('./noise.wav')
+    import sys
+    sps, data = readWav(sys.argv[1])
     ######  HERE  ####### 
+    print(sps, len(data))
