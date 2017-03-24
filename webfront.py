@@ -78,12 +78,11 @@ def predictAction():
             if os.path.exists(fullpath) and os.path.isfile(fullpath):
                 os.remove(fullpath)
             file.save(fullpath)  # save the uploaded file
-            # check if file is wav
             
-            if command_exists('ffmpeg'):
-                ffmpeg_cmd = 'ffmpeg -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
+            if os.path.exists('.\\ffmpeg\\bin\\ffmpeg.exe'):
+                ffmpeg_cmd = '.\\ffmpeg\\bin\\ffmpeg.exe -i {} -ac 1 -acodec pcm_f32le -ar 11025 {}.wav -v 1'.format(fullpath, fullpath)
                 os.system(ffmpeg_cmd)
-                res = predict(fullpath + '.wav', '\\models\\save_14.h5')
+                res = predict(fullpath + '.wav', '.\\models\\save_05.h5')
             else:
                 flash('Unable to find ffmpeg, please install ffmpeg')
                 return redirect(request.url)
