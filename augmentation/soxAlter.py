@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-import pysox as ps
 import os
 from  random import random, randint
 import sys
@@ -55,31 +54,17 @@ def _norm(chain):
     return chain
 
 def soxAlter(filename, outname):
-    din = ps.CSoxStream(filename)
-    
-    encoding = ps.CEncodingInfo(ps.CEncodingInfo.FLOAT, 32)
-    signal = ps.CSignalInfo(44100, 1)
-    #outname = './tmp/' + str(getpid()) + '.wav'
+    chain = 'sox %s -c 1 -r 11025 -b 16 %s'%(filename, outname)
 
-    out = ps.CSoxStream(outname, 'w', signal, encoding, 'wav')
+    chain += _pitch()
+    chain += _tempo()
+    chain += _flanger()
+    chain += _echo()
+    chain += _bandpass()
+    chain += _norm()
 
-    chain = ps.CEffectsChain(din, out)
-    
-    # 通道归一，必须，否则会对rate造成不必要的影响
-    ef = ps.CEffect('channels', [b'1'])
-    chain.add_effect(ef)
-    
-    _pitch(chain)
-    _tempo(chain)
-    _flanger(chain)
-    _echo(chain)
-    _bandpass(chain)
-    _norm(chain)
-
-    chain.flow_effects()
-    
-
-    out.close()
+    # execute
+    return os.system(chain)
 
 if __name__ == '__main__':
     os.system('rm ./tmp/*')
