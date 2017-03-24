@@ -17,6 +17,9 @@ from soxAlter import soxAlter
 import queue
 import threading
 
+TRAIN_DATA_DIR= '..\\data\\train'
+TEST_DAYA_DIR='..\\data\\test'
+
 
 # 读取数据，放入队列的的线程函数
 def _enQueueData(dpath, alter, Q):
@@ -78,8 +81,8 @@ if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
         print('train')
-        startAlterShipping(9009, 'C:\\*.wav')
+        startAlterShipping(9009, TRAIN_DATA_DIR + '*.wav')
     else:
         print('test')
-        startAlterShipping(9090, 'C:\\*.wav')
+        startAlterShipping(9090, TEST_DATA_DIR + '*.wav')
     

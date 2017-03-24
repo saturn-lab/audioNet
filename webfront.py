@@ -11,7 +11,7 @@ sys.path.append('augmentation\\')
 from wavReader import readWav
 from model import KerasModel
 
-UPLOAD_FOLDER = '.\\tmp\'
+UPLOAD_FOLDER = '.\\tmp\\'
 FFMPEG_PATH='.\\ffmpeg\\bin\\ffmpeg.exe'
 
 app = Flask(__name__)
