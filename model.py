@@ -28,26 +28,26 @@ L2_RATE=0.0001
 def KerasModel(isCompile=True):
     In = Input(shape=(None, 1, 1))
     x = Lambda(fourierLayer, output_shape=fourierLayerShape)(In)
-    
-    x = Convolution2D(filters=32, kernel_size=(3, 3), strides=(3,3), activation='relu', kernel_regularizer=l2(L2_RATE))(x)
-    
-    #x = Convolution2D(filters=64, kernel_size=(3, 3), strides=(3,3), activation='relu', kernel_regularizer=l2(L2_RATE))(x)
-    
-    #x = Convolution2D(filters=64, kernel_size=(3, 3), strides=(2,2), activation='relu', kernel_regularizer=l2(L2_RATE))(x)
-    
-    #x = Convolution2D(filters=32, kernel_size=(3, 3), strides=(2,2), activation='relu', kernel_regularizer=l2(L2_RATE))(x)
-    
-    #x = Convolution2D(filters=16, kernel_size=(3, 3), strides=(2,2), activation='relu', kernel_regularizer=l2(L2_RATE))(x)
+    x = Convolution2D(32, 7, 7, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(64, 7, 5, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(64, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
+    x = Convolution2D(32, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
+    #x = Dropout(DROP_RATE)(x)
     
     freq, chan = x.get_shape()[2:4]
     x = TimeDistributed(Reshape([int(freq)*int(chan)]))(x)
-    print(x.get_shape())
-    x = Bidirectional(LSTM(64, ))(x)
     
+    x = Bidirectional(LSTM(128, ))(x)
+    
+    #x = Dropout(DROP_RATE)(x)
+    x = Dense(64, activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     x = Dense(24, activation='softmax')(x)
     
-    model = Model(inputs=In, outputs=x)
+    model = Model(input=In, output=x)
     
     if isCompile:
         opt = Adam(1e-4)
