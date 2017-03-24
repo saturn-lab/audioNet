@@ -20,9 +20,6 @@ parameters like file path should be modified manual in `train.py` and `client.py
 # How to Evaluate
 run `webfront.py` it will start a web server, which requires `ffmpeg` for format convertion.
 
-it uses the saved model for prediction. the `model-path` is set in the file. 
+it uses the saved model for prediction. the model-path is set in the file. 
 
-# Data Augmentation
-Data augmentation is simply done by adding random noise currently.
-
-More augmentation is expected to be done via binary library `sox` and python package `pysox`, which need to be explicit installed.
+modification is usually required.
