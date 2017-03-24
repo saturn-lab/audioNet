@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-import os
+import os, subprocess
 from  random import random, randint
 import sys
 
@@ -53,7 +53,7 @@ def _norm():
     return chain
 
 def soxAlter(filename, outname):
-    chain = ' %s -c 1 -r 11025 -b 32 %s'%(filename, outname)
+    chain = ' -V1 %s -c 1 -r 11025 -e float -b 32 %s'%(filename, outname)
     chain = SOX_PATH + chain
     
     chain += _pitch()
@@ -64,7 +64,7 @@ def soxAlter(filename, outname):
     chain += _norm()
     
     # execute
-    return os.system(chain)
+    return subprocess.call(chain, shell=True)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

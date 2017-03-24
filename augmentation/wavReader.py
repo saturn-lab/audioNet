@@ -102,3 +102,4 @@ if __name__ == '__main__':
     sps, data = readWav(sys.argv[1])
     ######  HERE  ####### 
     print(sps, len(data))
+    print(max(data))

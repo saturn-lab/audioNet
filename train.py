@@ -1,15 +1,15 @@
 #!/opt/anaconda3/bin/python
-# -*- coding:utf-8 -*-
 
 
 from model import KerasModel
 from sockDataGenerator import sockDataGenerator
+import os
 
 def train(sp=-1):
     model = KerasModel()
     
     train = sockDataGenerator(9009,  50)
-    test = sockDataGenerator(9090, 32)
+    test = sockDataGenerator(9090, 10)
     next(train)
     next(test)
     print('socket esteblish')
@@ -21,10 +21,10 @@ def train(sp=-1):
     for i in range(sp + 1, 10):
         model.fit_generator(
             generator=train,
-            samples_per_epoch=1000,
-            nb_epoch=5,
+            samples_per_epoch=500,
+            nb_epoch=1,
             validation_data=test,
-            nb_val_samples=128
+            nb_val_samples=20
         )
         model.save_weights('.' + os.sep + 'models' + os.sep + 'save_' + str(i) + '.h5' )
 
