@@ -16,11 +16,14 @@ from backgroundAlter import bgnAlter
 import queue
 import threading
 
+TRAIN_DATA_DIR='..' + os.sep + 'data' + os.sep + 'train'
+TEST_DATA_DIR = '..' + os.sep + 'data' + os.sep + 'test'
+
 
 # è¯»å–æ•°æ®ï¼Œæ”¾å…¥é˜Ÿåˆ—çš„çš„çº¿ç¨‹å‡½æ•°
 def _enQueueData(dpath, alter, Q):
     flist = glob.glob(dpath) 
-    outf = './tmp/' + str(os.getpid()) + '.wav'
+    outf = '.' + os.sep + 'tmp' + os.sep + str(os.getpid()) + '.wav'
     thrd = threading.currentThread()
     while getattr(thrd, 'running', True):
         f = flist[randint(0, len(flist) - 1)]
@@ -78,8 +81,8 @@ if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
         print('train')
-        startAlterShipping(9009, 'C:\\Users\\saturn\\Downloads\\train\\*.wav')
+        startAlterShipping(9009, TRAIN_DATA_DIR + os.sep + '*.wav')
     else:
         print('test')
-        startAlterShipping(9090, 'C:\\Users\\saturn\\Downloads\\test\\*.wav')
+        startAlterShipping(9090, TEST_DATA_DIR + os.sep + '*.wav')
     

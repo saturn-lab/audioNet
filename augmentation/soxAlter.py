@@ -67,9 +67,8 @@ def soxAlter(filename, outname):
     return os.system(chain)
 
 if __name__ == '__main__':
-    os.system('rm ./tmp/*')
     if len(sys.argv) < 2:
-        din = '/home/saturn/ds/data2/bluetooth/train/raw/2003880056/k.mp3'
+        din = '/home/saturn/storage/dataD/bluetooth/train/raw/2003880056/k.mp3'
     else:
         din = sys.argv[1]
     soxAlter(din, './test.wav')

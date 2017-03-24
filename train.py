@@ -14,7 +14,7 @@ def train(sp=-1):
     next(test)
     print('socket esteblish')
     if sp != -1:
-        chkp = '.\\models\\save_' + str(sp) + '.h5'
+        chkp = '.' + os.sep + 'models' + os.sep + 'save_' + str(sp) + '.h5'
         model.load_weights(chkp)
     print('start point: %d'%sp)
 
@@ -26,7 +26,7 @@ def train(sp=-1):
             validation_data=test,
             nb_val_samples=128
         )
-        model.save_weights('.\\models\\save_' + str(i) + '.h5' )
+        model.save_weights('.' + os.sep + 'models' + os.sep + 'save_' + str(i) + '.h5' )
 
 if __name__ == '__main__':
     train(-1)
