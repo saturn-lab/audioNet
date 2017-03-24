@@ -12,40 +12,37 @@ from random import randint
 from wavReader import readWav, parseName
 
 from backgroundAlter import bgnAlter
-from soxAlter import soxAlter
 
 import queue
 import threading
 
-TRAIN_DATA_DIR= '..' + os.sep + 'data' + os.sep + 'train'
-TEST_DATA_DIR='..' + os.sep + 'data' + os.sep + 'test'
 
-
-# 读取数据，放入队列的的线程函数
+# è¯»å–æ•°æ®ï¼Œæ”¾å…¥é˜Ÿåˆ—çš„çš„çº¿ç¨‹å‡½æ•°
 def _enQueueData(dpath, alter, Q):
     flist = glob.glob(dpath) 
-    outf = '.' + os.sep + 'tmp' + os.sep + str(os.getpid()) + '.wav'
+    outf = './tmp/' + str(os.getpid()) + '.wav'
     thrd = threading.currentThread()
     while getattr(thrd, 'running', True):
         f = flist[randint(0, len(flist) - 1)]
         label = parseName(f)
         if alter:
-            soxAlter(f, outf)
-            sps, data = readWav(outf)
+            # Alter file 'f' to 'outf' for file-level transform
+            sps, data = readWav(f)
             bgnAlter(data)
+            # in-memory transform
         else:
             sps, data = readWav(f)
-        data = data[1:] - data[0:len(data) - 1] # Z 变换
+        data = data[1:] - data[0:len(data) - 1] # Z å˜æ¢
         Q.put((label, data), True)
 
-# 创建线程，返回线程和队列
+# åˆ›å»ºçº¿ç¨‹ï¼Œè¿”å›žçº¿ç¨‹å’Œé˜Ÿåˆ—
 def _dataThreadOn(dpath, alter=True, maxQ=128):
     Q = queue.Queue(maxQ)
     thrd = threading.Thread(target=_enQueueData, args = (dpath, alter, Q))
     thrd.start()
     return thrd, Q
 
-# 发送所有数据，阻塞模式
+# å‘é€æ‰€æœ‰æ•°æ®ï¼Œé˜»å¡žæ¨¡å¼
 def _sendall(s, data):
     length = len(data)
     minimal = 512
@@ -55,7 +52,7 @@ def _sendall(s, data):
         prog += s.send(data[8:len(data)])
     return None
 
-# 主要函数，创建一个socket，向sock_addr发送数据，并且负责IO线程的管理
+# ä¸»è¦å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªsocketï¼Œå‘sock_addrå‘é€æ•°æ®ï¼Œå¹¶ä¸”è´Ÿè´£IOçº¿ç¨‹çš„ç®¡ç†
 def startAlterShipping(port, glob_string, alter=True):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('localhost', port))
@@ -81,8 +78,8 @@ if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
         print('train')
-        startAlterShipping(9009, TRAIN_DATA_DIR + os.sep + '*.wav')
+        startAlterShipping(9009, 'C:\\Users\\saturn\\Downloads\\train\\*.wav')
     else:
         print('test')
-        startAlterShipping(9090, TEST_DATA_DIR + os.sep + '*.wav')
+        startAlterShipping(9090, 'C:\\Users\\saturn\\Downloads\\test\\*.wav')
     
