@@ -11,7 +11,8 @@ sys.path.append('augmentation\\')
 from wavReader import readWav
 from model import KerasModel
 
-UPLOAD_FOLDER = 'tmp\\audioNet'
+UPLOAD_FOLDER = '.\\tmp\'
+FFMPEG_PATH='.\\ffmpeg\\bin\\ffmpeg.exe'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -79,8 +80,10 @@ def predictAction():
                 os.remove(fullpath)
             file.save(fullpath)  # save the uploaded file
             
-            if os.path.exists('.\\ffmpeg\\bin\\ffmpeg.exe'):
-                ffmpeg_cmd = '.\\ffmpeg\\bin\\ffmpeg.exe -i {} -ac 1 -acodec pcm_f32le -ar 11025 {}.wav -v 1'.format(fullpath, fullpath)
+            if os.path.exists(FFMPEG_PATH):
+                ffmpeg_cmd = ' -i {} -ac 1 -acodec pcm_f32le -ar 11025 {}.wav -v 1'.format(fullpath, fullpath)
+                ffmpeg_cmd = FFMPEG_PATH + ffmpeg_cmd
+                
                 os.system(ffmpeg_cmd)
                 res = predict(fullpath + '.wav', '.\\models\\save_05.h5')
             else:
