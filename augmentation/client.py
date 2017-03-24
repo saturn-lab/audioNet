@@ -32,8 +32,8 @@ def _enQueueData(dpath, alter, Q):
         f = flist[randint(0, len(flist) - 1)]
         label = parseName(f)
         if alter:
-            #soxAlter(f, outf)
-            outf = f
+            soxAlter(f, outf)
+            #outf = f
             sps, data = readWav(outf)
             bgnAlter(data)
         else:
