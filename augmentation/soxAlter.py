@@ -6,7 +6,7 @@ from  random import random, randint
 import sys
 
 EF_RATE=0.6
-SOX_PATH='.\\sox\\sox.exe'
+SOX_PATH='..' + os.sep + 'sox' + os.sep + 'sox'
 
 def _pitch():
     chain = ' '
@@ -41,7 +41,7 @@ def _bandpass():
     chain = ' '
     if random() < EF_RATE:
         center = randint(1000, 5000)
-        width = str(randint(center /10, center))
+        width = str(randint(center // 10, center))
         center = str(center)
         chain += 'bandpass %s %s'%(center, width)
     return chain
@@ -53,7 +53,7 @@ def _norm():
     return chain
 
 def soxAlter(filename, outname):
-    chain = ' %s -c 1 -r 11025 -b 16 %s'%(filename, outname)
+    chain = ' %s -c 1 -r 11025 -b 32 %s'%(filename, outname)
     chain = SOX_PATH + chain
     
     chain += _pitch()
@@ -62,7 +62,7 @@ def soxAlter(filename, outname):
     chain += _echo()
     chain += _bandpass()
     chain += _norm()
-
+    
     # execute
     return os.system(chain)
 

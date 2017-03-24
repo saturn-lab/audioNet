@@ -6,13 +6,13 @@ from flask import Flask, request, redirect, flash
 from werkzeug.utils import secure_filename
 import numpy
 
-sys.path.append('augmentation\\')
+sys.path.append('augmentation' + os.sep)
 
 from wavReader import readWav
 from model import KerasModel
 
-UPLOAD_FOLDER = '.\\tmp\\'
-FFMPEG_PATH='.\\ffmpeg\\bin\\ffmpeg.exe'
+UPLOAD_FOLDER = '.' + os.sep + 'tmp'
+FFMPEG_PATH='.' + os.sep + 'ffmpeg' + os.sep + 'bin' + os.sep + 'ffmpeg'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -85,7 +85,7 @@ def predictAction():
                 ffmpeg_cmd = FFMPEG_PATH + ffmpeg_cmd
                 
                 os.system(ffmpeg_cmd)
-                res = predict(fullpath + '.wav', '.\\models\\save_05.h5')
+                res = predict(fullpath + '.wav', '.' + os.sep + 'models' + os.sep + 'save_05.h5')
             else:
                 flash('Unable to find ffmpeg, please install ffmpeg')
                 return redirect(request.url)

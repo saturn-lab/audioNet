@@ -17,14 +17,14 @@ from soxAlter import soxAlter
 import queue
 import threading
 
-TRAIN_DATA_DIR= '..\\data\\train'
-TEST_DAYA_DIR='..\\data\\test'
+TRAIN_DATA_DIR= '..' + os.sep + 'data' + os.sep + 'train'
+TEST_DATA_DIR='..' + os.sep + 'data' + os.sep + 'test'
 
 
 # 读取数据，放入队列的的线程函数
 def _enQueueData(dpath, alter, Q):
     flist = glob.glob(dpath) 
-    outf = './tmp/' + str(os.getpid()) + '.wav'
+    outf = '.' + os.sep + 'tmp' + os.sep + str(os.getpid()) + '.wav'
     thrd = threading.currentThread()
     while getattr(thrd, 'running', True):
         f = flist[randint(0, len(flist) - 1)]
@@ -81,8 +81,8 @@ if __name__ == '__main__':
     t = sys.argv[1]
     if t == 'train':
         print('train')
-        startAlterShipping(9009, TRAIN_DATA_DIR + '*.wav')
+        startAlterShipping(9009, TRAIN_DATA_DIR + os.sep + '*.wav')
     else:
         print('test')
-        startAlterShipping(9090, TEST_DATA_DIR + '*.wav')
+        startAlterShipping(9090, TEST_DATA_DIR + os.sep + '*.wav')
     
