@@ -40,7 +40,7 @@ def _echo():
 def _bandpass():
     chain = ' '
     if random() < EF_RATE:
-        center = randint(1000, 5000)
+        center = randint(1000, 3000)
         width = str(randint(center // 10, center))
         center = str(center)
         chain += 'bandpass %s %s'%(center, width)

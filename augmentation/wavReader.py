@@ -49,7 +49,7 @@ def readWav(filename):
     # label ,    samples per second,   samples
 
 def parseName(filename): # ./xx/yy/10000_12.wav
-    filename = filename.split('/')
+    filename = filename.split(os.sep)
     filename = filename[len(filename) - 1]
     filename = filename.split('.')[0]
     filename = filename.split('_')

@@ -18,13 +18,13 @@ def train(sp=-1):
         model.load_weights(chkp)
     print('start point: %d'%sp)
 
-    for i in range(sp + 1, 10):
+    for i in range(sp + 1, 100):
         model.fit_generator(
             generator=train,
-            samples_per_epoch=500,
+            samples_per_epoch=3000,
             nb_epoch=1,
             validation_data=test,
-            nb_val_samples=20
+            nb_val_samples=100
         )
         model.save_weights('.' + os.sep + 'models' + os.sep + 'save_' + str(i) + '.h5' )
 
