@@ -80,7 +80,7 @@ def predictAction():
                 os.remove(fullpath)
             file.save(fullpath)  # save the uploaded file
             
-            if os.path.exists(FFMPEG_PATH):
+            if os.path.exists(FFMPEG_PATH) or os.path.exists(FFMPEG_PATH + '.exe'):
                 ffmpeg_cmd = ' -i {} -ac 1 -acodec pcm_f32le -ar 11025 {}.wav -v 1'.format(fullpath, fullpath)
                 ffmpeg_cmd = FFMPEG_PATH + ffmpeg_cmd
                 
