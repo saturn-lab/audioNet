@@ -7,7 +7,7 @@ It trains the AudioNet as long as it get a data source.
 `client.py` is the data source. It reads wave files and performs data augmentation.
 
 ## codes
-serer side: `$ ./train.py`
+server side: `$ ./train.py`
 
 train-data client side: `$ ./client.py train`
 test-data client side: `$ ./client.py test`
