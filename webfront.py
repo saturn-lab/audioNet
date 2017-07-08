@@ -13,6 +13,7 @@ from model import KerasModel
 
 UPLOAD_FOLDER = '.' + os.sep + 'tmp'
 FFMPEG_PATH='.' + os.sep + 'ffmpeg' + os.sep + 'bin' + os.sep + 'ffmpeg'
+MODEL_ID=60
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -26,10 +27,6 @@ def predict(wavfile, modelfile):
 
     result = modelA.predict(wav, 1)
     return numpy.argmax(result, 1)
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def command_exists(command):
     return subprocess.call('type ' + command, shell=True, 
@@ -81,11 +78,11 @@ def predictAction():
             file.save(fullpath)  # save the uploaded file
             
             if os.path.exists(FFMPEG_PATH) or os.path.exists(FFMPEG_PATH + '.exe'):
-                ffmpeg_cmd = ' -i {} -ac 1 -acodec pcm_f32le -ar 11025 {}.wav -v 1'.format(fullpath, fullpath)
+                ffmpeg_cmd = ' -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
                 ffmpeg_cmd = FFMPEG_PATH + ffmpeg_cmd
                 
                 os.system(ffmpeg_cmd)
-                res = predict(fullpath + '.wav', '.' + os.sep + 'models' + os.sep + 'save_05.h5')
+                res = predict(fullpath + '.wav', '.' + os.sep + 'models' + os.sep + 'save_'+ str(MODEL_ID) +'.h5')
             else:
                 flash('Unable to find ffmpeg, please install ffmpeg')
                 return redirect(request.url)

@@ -1,25 +1,40 @@
 # How to Train
-Training involes two file: `train.py` and `augmentation/client.py`.
+Training involes two files: `train.py` and `augmentation/client.py`.
 
 `train.py` will open a local network port waiting for data. 
-It trains the AudioNet as long as it get a data source.
+It trains the AudioNet once it gets a data source.
 
 `client.py` is the data source. It reads wave files and performs data augmentation.
 
-## codes
+Before training, there are several things you should do.
+
+## data
+* gain data for training. 
+* split data into two part: train, validate
+* put train data into `data/train/`
+* put validate data into `data/test/`
+
+## augmentation
+* gain `sox` from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
+* extract zip file into the `sox` folder. __so that there exists `sox/sox.exe`__.
+
+## How to Run
 server side: `$ ./train.py`
-
-train-data client side: `$ ./client.py train`
-test-data client side: `$ ./client.py test`
-
-server side need both train-data and test-data to proceed.
+client side: `$ ./client.py train`
 
 ## note
-parameters like file path should be modified manual in `train.py` and `client.py`.
+If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
 # How to Evaluate
 run `webfront.py` it will start a web server, which requires `ffmpeg` for format convertion.
 
-it uses the saved model for prediction. the model-path is set in the file. 
+## Get FFMPEG
+* Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
+* extract the zip file into `ffmpeg` folder, __so that there exists `ffmpeg/bin/ffmeg.exe`__.
 
-modification is usually required.
+## Select Checkpoint for Evaluation
+modify `webfront.py`, change `MODEL_ID` to yours.
+
+## How to Run
+`$ ./webfront.py`
+
