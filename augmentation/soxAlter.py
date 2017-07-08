@@ -53,7 +53,7 @@ def _norm():
     return chain
 
 def soxAlter(filename, outname):
-    chain = ' -V1 %s -c 1 -r 11025 -e float -b 32 %s'%(filename, outname)
+    chain = ' -V1 %s -c 1 -r 44100 -e float -b 32 %s'%(filename, outname)
     chain = SOX_PATH + chain
     
     chain += _pitch()
@@ -68,7 +68,7 @@ def soxAlter(filename, outname):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        din = '/home/saturn/storage/dataD/bluetooth/train/raw/2003880056/k.mp3'
+        din = os.join('..', 'data', 'train', '10000_21.wav')
     else:
         din = sys.argv[1]
     soxAlter(din, './test.wav')

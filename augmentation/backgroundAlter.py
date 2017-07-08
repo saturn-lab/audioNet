@@ -6,9 +6,9 @@ import  random
 from wavReader import readWav, numpyToWav
 
 
-ALTER_RATE=1.0
-RANDOM_GAIN=0.6
-BGM_GAIN=0.9
+ALTER_RATE=0.6
+RANDOM_GAIN=0.2
+BGM_GAIN=0.2
 def _getBgn(globstring='./bgn/*.wav'):
     flist = glob.glob(globstring)
     i = random.randint(0, len(flist) - 1)
