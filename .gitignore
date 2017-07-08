@@ -3,3 +3,5 @@
 *.h5
 *.pb
 models/*
+data/*
+
