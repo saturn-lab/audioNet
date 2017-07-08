@@ -3,9 +3,14 @@ from tensorflow.python.framework import graph_io
 from tensorflow.python.training import saver
 from keras import backend as K
 import os
+import sys
 
 model = KerasModel()
-sp = 64
+if len(sys.argv) < 1:
+    sp = 64
+else:
+    sp = int(sys.argv[1])
+
 chkp = '.' + os.sep + 'models' + os.sep + 'save_' + str(sp) + '.h5'
 
 sess = K.get_session()
@@ -19,9 +24,9 @@ command = '''python -m tensorflow.python.tools.freeze_graph \
 --output_graph=%s \
 --output_node_names=%s \
 ''' % (
-    os.join('.', 'models', 'model.pb'),
-    os.join('.', 'models', 'model.ckpt'),
-    os.join('.', 'model.pb'),
+    os.path.join('.', 'models', 'model.pb'),
+    os.path.join('.', 'models', 'model.ckpt'),
+    os.path.join('.', 'asrModel.pb'),
     '"dense_2/Softmax"'
 )
 

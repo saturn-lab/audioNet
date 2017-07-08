@@ -1,4 +1,5 @@
 *.pyc
 *.sock
 *.h5
-model/*.h5
+*.pb
+models/*
