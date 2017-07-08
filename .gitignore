@@ -4,4 +4,5 @@
 *.pb
 models/*
 data/*
-
+sox/*
+augmentation/tmp/*

@@ -70,10 +70,11 @@ def sockDataGenerator(port, batchSize = 16):
             ret_L[i, :] = L
 
         lengthes = [d.shape[0] for d in dlist]
-        ret_d = numpy.zeros([batchSize, max(lengthes)], dtype=numpy.float32)
+        l_max = max(lengthes)
+        ret_d = numpy.zeros([batchSize, l_max], dtype=numpy.float32)
 
         for i, d in enumerate(dlist):
-            ret_d[i, 0:lengthes[i]] = d
+            ret_d[i, l_max - lengthes[i]:] = d
         
         ret_d = ret_d.reshape(batchSize, -1, 1, 1)
         yield ret_d, ret_L
