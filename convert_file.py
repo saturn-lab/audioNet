@@ -3,6 +3,7 @@
 
 import os
 import glob
+import sys
 
 FFMPEG_PATH=os.path.join('.', 'ffmpeg', 'bin', 'ffmpeg')
 NAME_TO_ID = {
@@ -55,3 +56,5 @@ def ConvertAudioToWav(dir_in, dir_out=os.path.join('.', 'data', 'train')):
 
   return iter_num
 
+if __name__ == '__main__':
+    ConvertAudioToWav(sys.argv[1])
