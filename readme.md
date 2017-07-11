@@ -26,7 +26,7 @@ client side: `$ ./client.py train`
 If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
 # How to Evaluate
-run `webfront.py` it will start a web server, which requires `ffmpeg` for format convertion.
+run `webfront.py` it will start a web server, which requires `[ffmpeg](https://ffmpeg.org/)` for format convertion.
 
 ## Get FFMPEG
 * Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
