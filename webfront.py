@@ -26,7 +26,7 @@ def predict(wavfile, modelfile):
     modelA.load_weights(modelfile)
 
     result = modelA.predict(wav, 1)
-    return numpy.argmax(result, 1)
+    return numpy.argmax(result, 1)[0]
 
 def command_exists(command):
     return subprocess.call('type ' + command, shell=True, 
@@ -84,8 +84,7 @@ def predictAction():
                 os.system(ffmpeg_cmd)
                 res = predict(fullpath + '.wav', '.' + os.sep + 'models' + os.sep + 'save_'+ str(MODEL_ID) +'.h5')
             else:
-                flash('Unable to find ffmpeg, please install ffmpeg')
-                return redirect(request.url)
+                return 'Unable to find ffmpeg, please install ffmpeg'
 
             return str(DICT[res])
 
