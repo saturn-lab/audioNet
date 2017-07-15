@@ -80,6 +80,7 @@ def predictAction():
             if os.path.exists(FFMPEG_PATH) or os.path.exists(FFMPEG_PATH + '.exe'):
                 ffmpeg_cmd = ' -i {} -ac 1 -acodec pcm_f32le -ar 44100 {}.wav -v 1'.format(fullpath, fullpath)
                 ffmpeg_cmd = FFMPEG_PATH + ffmpeg_cmd
+                ffmpeg_cmd = 'echo -e "y\r" | ' + ffmpeg_cmd
                 
                 os.system(ffmpeg_cmd)
                 res = predict(fullpath + '.wav', '.' + os.sep + 'models' + os.sep + 'save_'+ str(MODEL_ID) +'.h5')
