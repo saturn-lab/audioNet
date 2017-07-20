@@ -1,7 +1,6 @@
 # Data preparation
 `$ python ./convert_file.py  ../../data`
 
-
 # How to Train
 Training involes two files: `train.py` and `augmentation/client.py`.
 
@@ -18,7 +17,7 @@ Before training, there are several things you should do.
 * put train data into `data/train/`
 * put validate data into `data/test/`
 
-## augmentation
+## data augmentation
 * gain `sox` from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
 * extract zip file into the `sox` folder. __so that there exists `sox/sox.exe`__.
 
@@ -30,7 +29,7 @@ client side: `$python ./client.py` (in './augumentation' folder)
 ## note
 If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
-# How to Evaluate
+# Evaluate trained models
 run `webfront.py` it will start a web server, which requires `[ffmpeg](https://ffmpeg.org/)` for format convertion.
 
 ## Get FFMPEG
