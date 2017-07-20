@@ -1,3 +1,7 @@
+# Data preparation
+`$ python ./convert_file.py  ../../data`
+
+
 # How to Train
 Training involes two files: `train.py` and `augmentation/client.py`.
 
@@ -19,8 +23,9 @@ Before training, there are several things you should do.
 * extract zip file into the `sox` folder. __so that there exists `sox/sox.exe`__.
 
 ## How to Run
-server side: `$ ./train.py`
-client side: `$ ./client.py train`
+server side: `$python ./train.py`
+
+client side: `$python ./client.py` (in './augumentation' folder)
 
 ## note
 If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
@@ -37,4 +42,8 @@ modify `webfront.py`, change `MODEL_ID` to yours.
 
 ## How to Run
 `$ ./webfront.py`
+
+# Convert model file *.h5 to *.pb file 
+
+`$ python ./create_pb.py  XX`
 
