@@ -23,7 +23,7 @@ TEST_DATA_DIR = '..' + os.sep + 'data' + os.sep + 'test'
 
 
 
-# è¯»å–æ•°æ®ï¼Œæ”¾å…¥é˜Ÿåˆ—çš„çš„çº¿ç¨‹å‡½æ•°
+# 读取数据，放入队列的的线程函数
 def _enQueueData(dpath, alter, Q):
     flist = glob.glob(dpath) 
     outf = '.' + os.sep + 'tmp' + os.sep + str(os.getpid()) + '.wav'
@@ -38,17 +38,17 @@ def _enQueueData(dpath, alter, Q):
             bgnAlter(data)
         else:
             sps, data = readWav(f)
-        data = data[1:] - data[0:len(data) - 1] # Z å˜æ¢
+        data = data[1:] - data[0:len(data) - 1] # Z 变换
         Q.put((label, data), True)
 
-# åˆ›å»ºçº¿ç¨‹ï¼Œè¿”å›žçº¿ç¨‹å’Œé˜Ÿåˆ—
+# 创建线程，返回线程和队列
 def _dataThreadOn(dpath, alter=True, maxQ=128):
     Q = queue.Queue(maxQ)
     thrd = threading.Thread(target=_enQueueData, args = (dpath, alter, Q))
     thrd.start()
     return thrd, Q
 
-# å‘é€æ‰€æœ‰æ•°æ®ï¼Œé˜»å¡žæ¨¡å¼
+# 发送所有数据，阻塞模式
 def _sendall(s, data):
     length = len(data)
     minimal = 512
@@ -58,7 +58,7 @@ def _sendall(s, data):
         prog += s.send(data[8:len(data)])
     return None
 
-# ä¸»è¦å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªsocketï¼Œå‘sock_addrå‘é€æ•°æ®ï¼Œå¹¶ä¸”è´Ÿè´£IOçº¿ç¨‹çš„ç®¡ç†
+# 主要函数，创建一个socket，向sock_addr发送数据，并且负责IO线程的管理
 def startAlterShipping(port, glob_string, alter=True, maxQ=64):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('localhost', port))
