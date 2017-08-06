@@ -30,7 +30,7 @@ client side: `$python ./client.py` (in './augumentation' folder)
 If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
 # Evaluate trained models
-run `webfront.py` it will start a web server, which requires `[ffmpeg](https://ffmpeg.org/)` for format convertion.
+run `webfront.py`, start a web server and input URL:http://127.0.0.1:5000/predict. It requires `[ffmpeg](https://ffmpeg.org/)` for format convertion.
 
 ## Get FFMPEG
 * Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
@@ -41,7 +41,8 @@ modify `webfront.py`, change `MODEL_ID` to yours.
 
 ## How to quickly valid the accuracy of your model?  
 *  Run webfront.py! It offer a web UI for uploading a audio file and report the predicted result using your model. 
-*  Open a web browser and input URL: http://127.0.0.1:5000/predict 
+*  Open a web browser and input URL: http://127.0.0.1:5000/predict. 
+
 `$ python ./webfront.py`
 
 ## How to deploy your model? 
