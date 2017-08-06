@@ -39,8 +39,10 @@ run `webfront.py` it will start a web server, which requires `[ffmpeg](https://f
 ## Select Checkpoint for Evaluation
 modify `webfront.py`, change `MODEL_ID` to yours.
 
-## How to Run
-`$ ./webfront.py`
+## How to quickly valid the accuracy of your model?  
+## Run webfront.py! It offer a web UI for uploading a audio file and report the predicted result using your model. 
+## Open a web browser and input URL: http://127.0.0.1:5000/predict 
+`$ python ./webfront.py`
 
 # Convert model file *.h5 to *.pb file 
 
