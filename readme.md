@@ -45,8 +45,10 @@ modify `webfront.py`, change `MODEL_ID` to yours.
 
 `$ python ./webfront.py`
 
-## How to deploy your model? 
+# How to deploy your model? 
 *  Convert model file *.h5 to *.pb file 
-*  place your *.pb file where you want to deploy.
+*  Place your *.pb file where you want to deploy.
+*  See [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioNet)
+
 `$ python ./create_pb.py  XX`
 
