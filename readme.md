@@ -40,10 +40,13 @@ run `webfront.py`, start a web server and input URL:http://127.0.0.1:5000/predic
 modify `webfront.py`, change `MODEL_ID` to yours.
 
 ## How to quickly valid the accuracy of your model?  
+*  Modify webfront.py, change "MODEL_ID=XX".
 *  Run webfront.py! It offer a web UI for uploading a audio file and report the predicted result using your model. 
-*  Open a web browser and input URL: http://127.0.0.1:5000/predict. 
 
 `$ python ./webfront.py`
+
+*  Open a web browser and input URL: http://127.0.0.1:5000/predict. 
+
 
 # How to deploy your model? 
 *  Convert model file *.h5 to *.pb file 
