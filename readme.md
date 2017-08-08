@@ -1,3 +1,8 @@
+# Tools preparation
+## Get FFMPEG
+* Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
+* extract the zip file into `ffmpeg` folder, __so that there exists `ffmpeg/bin/ffmeg.exe`__.
+
 # Data preparation
 `$ python ./convert_file.py  ../../data`
 
@@ -26,29 +31,30 @@ server side: `$python ./train.py`
 
 client side: `$python ./client.py` (in './augumentation' folder)
 
-## note
-If you want to resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
+## Resume a interrupted training process.
+You can resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
 # Evaluate trained models
-run `webfront.py`, start a web server and input URL:http://127.0.0.1:5000/predict. It requires `[ffmpeg](https://ffmpeg.org/)` for format convertion.
+## Select Checkpoint for Evaluation
+modify `webfront.py`, change `MODEL_ID` to yours.
 
-## Get FFMPEG
-* Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
-* extract the zip file into `ffmpeg` folder, __so that there exists `ffmpeg/bin/ffmeg.exe`__.
+##Run `python webfront.py`. 
+open a web browser and input URL:http://127.0.0.1:5000/predict. 
+
+##You can record a voice directive and upload it for test immediately. 
+
+*It requires `[ffmpeg](https://ffmpeg.org/)` for audio file format convertion.
 
 ## Select Checkpoint for Evaluation
 modify `webfront.py`, change `MODEL_ID` to yours.
 
-## How to quickly valid the accuracy of your model?  
+# How to deploy your model in Web Server?   
 *  Modify webfront.py, change "MODEL_ID=XX".
-*  Run webfront.py! It offer a web UI for uploading a audio file and report the predicted result using your model. 
+*  start a web server andand input URL: http://127.0.0.1:5000/predict. 
 
 `$ python ./webfront.py`
 
-*  Open a web browser and input URL: http://127.0.0.1:5000/predict. 
-
-
-# How to deploy your model? 
+# How to deploy your model in mobile? 
 *  Convert model file *.h5 to *.pb file 
 *  Place your *.pb file where you want to deploy.
 *  See Android mobile example: [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioNet)
