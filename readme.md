@@ -37,21 +37,21 @@ server side: `$python ./train.py`
 
 client side: `$python ./client.py` (in './augumentation' folder)
 
-## Resume a interrupted training process.
+** Resume a interrupted training process.
 You can resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
 
 # Step 3. Evaluate a trained models
-## Select Checkpoint for Evaluation
+## Step 3.1 Select Checkpoint for Evaluation
 modify `webfront.py`, change `MODEL_ID` to yours.
 
-##Run `python webfront.py`. 
+## Step 3.2 Run `python webfront.py`. 
 open a web browser and input URL:http://127.0.0.1:5000/predict. 
 
-##You can record a voice directive and upload it for test immediately. 
+## Step 3.3 You can record a voice directive and upload it for test immediately. 
 
 *It requires `[ffmpeg](https://ffmpeg.org/)` for audio file format convertion.
 
-## Select Checkpoint for Evaluation
+** Select Checkpoint for Evaluation
 modify `webfront.py`, change `MODEL_ID` to yours.
 
 # Step 4. How to deploy your model in Web Server?   
