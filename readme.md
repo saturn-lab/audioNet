@@ -1,13 +1,13 @@
 # Step 1. Tools preparation
-## Get FFMPEG
+## Step 1.1 Get FFMPEG
 * Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.
 * extract the zip file into `ffmpeg` folder, __so that there exists `ffmpeg/bin/ffmeg.exe`__.
 
-## Get SOX
+## Step 1.2 Get SOX
 * Download sox from SOund eXchange, you should get a zip file.
 * extract zip file into the sox folder. so that there exists sox/sox.exe.
 
-# Data preparation
+## Step 1.3 Data preparation
 Convert recorded audio files to *.wav files
 
 `$ python ./convert_file.py  ../../data`
