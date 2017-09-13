@@ -31,6 +31,6 @@ class Dataset:
   @staticmethod
   def NamesToLabel(file_names):
     ids = [int(f.split('_')[-1].split('.')[0]) for f in file_names]
-    data = Dataset.LABELS[idx]
+    data = Dataset.LABELS[ids]
 
     return data
