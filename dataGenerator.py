@@ -22,9 +22,6 @@ def DataGenerator(data_type = 'train'):
 
   ret = stub.Control(CS(sign = CS.START))
 
-  if len(ret.error) != 0:
-    raise RuntimeError(ret.error)
-  
   if data_type == 'train':
     func = stub.GetTrainData
   elif data_type == 'test':
