@@ -3,32 +3,32 @@
 
 # a client sample
 
-import augServer_pb2 as augPb
-import augServer_pb2_grpc as augGrpc
+from augmentation import augPb
+from augmentation import augGrpc
+from augmentation import CS
+from augmentation import SERVER_PORT
+
 import grpc
 import time
 import numpy as np
 import zlib
 
-from augServer_pb2 import ControlSignal as CS
-
-import config
 MAX_MESSAGE_LENGTH = 90000000
 
 channel = grpc.insecure_channel(
-    'localhost:%d' % config.SERVER_PORT, 
+    'localhost:%d' % SERVER_PORT, 
     options=[('grpc.max_receive_message_length', MAX_MESSAGE_LENGTH)]
     )
 
 stub = augGrpc.DataProviderStub(channel)
 
 empty = augPb.Empty()
-#print(stub.GetStatus(empty))
+print(stub.GetStatus(empty))
 
 #print(stub.Control(CS(sign = CS.START)))
 #print(stub.Control(CS(sign = CS.STOP)))
-#time.sleep(0.5)
-#exit()
+time.sleep(0.5)
+exit()
 
 t1 = time.time()
 bd = stub.GetTrainData(empty)
