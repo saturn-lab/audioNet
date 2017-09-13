@@ -2,7 +2,6 @@
 
 import tensorflow as tf
 import numpy
-from sockDataGenerator import sockDataGenerator
 from fourierWeight import fourierLayer, fourierLayerShape, fourierWeight
 
 from keras.models import Model
