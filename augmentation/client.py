@@ -36,7 +36,6 @@ batch_size = bd.batch_size
 
 data = np.frombuffer(bd.data, dtype = np.float32)
 label = np.frombuffer(bd.label, dtype = np.int32)
-lens = np.frombuffer(bd.lens, dtype = np.int32)
 print(data.shape)
 print(label.shape)
 print(lens.shape)

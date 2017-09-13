@@ -2,17 +2,15 @@
 
 
 from model import KerasModel
-from sockDataGenerator import sockDataGenerator
+from dataGenerator import DataGenerator
 import os
 
 def train(sp=-1):
     model = KerasModel()
     
-    train = sockDataGenerator(9009,  50)
-    test = sockDataGenerator(9090, 10)
-    next(train)
-    next(test)
-    print('socket esteblish')
+    train = DataGenerator('train')
+    test = DataGenerator('test')
+
     if sp != -1:
         chkp = '.' + os.sep + 'models' + os.sep + 'save_' + str(sp) + '.h5'
         model.load_weights(chkp)
