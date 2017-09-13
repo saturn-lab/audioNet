@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
+# Outer Dependency:
+#   SOund Exchange, sox.
+
 import os, subprocess
 from  random import random, randint
 import sys
 
-EF_RATE=0.6
-SOX_PATH='..' + os.sep + 'sox' + os.sep + 'sox'
+EF_RATE = 0.6
+SOX_PATH = os.path.dirname(os.path.realpath(__file__))
+SOX_PATH = os.path.join(SOX_PATH, 'sox', 'sox')
 
 def _pitch():
     chain = ' '
@@ -53,7 +57,7 @@ def _norm():
     return chain
 
 def soxAlter(filename, outname):
-    chain = ' -V1 %s -c 1 -r 44100 -e float -b 32 %s'%(filename, outname)
+    chain = ' -V1 %s  %s'%(filename, outname)
     chain = SOX_PATH + chain
     
     chain += _pitch()
@@ -66,9 +70,3 @@ def soxAlter(filename, outname):
     # execute
     return subprocess.call(chain, shell=True)
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        din = os.join('..', 'data', 'train', '10000_21.wav')
-    else:
-        din = sys.argv[1]
-    soxAlter(din, './test.wav')

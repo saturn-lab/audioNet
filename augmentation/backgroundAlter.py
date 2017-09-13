@@ -1,15 +1,18 @@
 #!/opt/anaconda3/bin/python
 
+import os
 import numpy
 import glob
 import  random 
-from wavReader import readWav, numpyToWav
 
+ME_DIR = os.path.dirname(os.path.realpath(__file__))
+BGN_DIR = os.path.join(ME_DIR, 'bgn')
 
-ALTER_RATE=0.6
-RANDOM_GAIN=0.2
-BGM_GAIN=0.2
-def _getBgn(globstring='./bgn/*.wav'):
+ALTER_RATE = 0.6
+RANDOM_GAIN = 0.2
+BGN_GAIN = 0.2
+
+def _getBgn(globstring):
     flist = glob.glob(globstring)
     i = random.randint(0, len(flist) - 1)
     f = flist[i]
@@ -22,13 +25,13 @@ def _uniformAlter(data):
         noise = numpy.array(noise, dtype=numpy.float32)
         noise = noise - 0.5
         alpha = random.random() * RANDOM_GAIN
-        data = (1-alpha) * data + alpha * noise
+        data  = data + alpha * noise
     return data
 
 def _sytheticAlter(data):
     if random.random() < ALTER_RATE:
-        noise = _getBgn()
-        alpha = random.random() * BGM_GAIN
+        noise = _getBgn(os.path.join(BGN_DIR, '*.wav'))
+        alpha = random.random() * BGN_GAIN
         if len(noise) < len(data):
             start = random.randint(0, len(data) - len(noise))
             data = (1 - alpha) * data[start:start + len(noise)] + alpha * noise
@@ -39,7 +42,7 @@ def _sytheticAlter(data):
 
 def bgnAlter(data):
     data = _uniformAlter(data)
-    data = _sytheticAlter(data)
+    #data = _sytheticAlter(data)
     return data
 
 if __name__ == '__main__':

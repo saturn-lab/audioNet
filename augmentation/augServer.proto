@@ -1,0 +1,48 @@
+syntax = "proto3";
+package augServer;
+
+// python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. ./augServer.proto
+
+service DataProvider{
+  rpc GetTrainData(Empty) returns (BatchData){}  
+  rpc GetTestData(Empty) returns (BatchData){}  
+  rpc GetStatus(Empty) returns (Status) {}
+  rpc Control(ControlSignal) returns (ControlResponse) {}
+}
+
+message Empty{
+}
+
+message BatchData{
+  int32  batch_size = 1;
+  bytes data = 2;
+  bytes label = 3;
+}
+
+message Status{
+  bool running = 1;
+  QueueReport train = 2;
+  QueueReport test = 3;
+}
+
+message QueueReport{
+  int32 thread_size = 2;
+  int32 queue_capacity = 3;
+  int32 queue_size = 4;
+  int32 batch_size = 5;
+}
+
+message ControlResponse{
+  Status status = 1;
+  string error = 2;
+}
+
+message ControlSignal{
+  enum Signal{
+    SETTING = 0;
+    START = 1;
+    STOP = 2;
+  }
+  Signal sign = 1;
+  Status status = 2;
+}
