@@ -135,7 +135,6 @@ class Handler:
     handler[CS.SETTING]             = Handler.settingHandler
     handler[CS.START]               = Handler.startHandler
     handler[CS.STOP]                = Handler.stopHandler
-    del CS
 
     Handler.HANDLER = handler
     
