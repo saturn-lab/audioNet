@@ -13,12 +13,12 @@ Convert recorded audio files to *.wav files
 `$ python ./convert_file.py  ../../data`
 
 # Step 2. How to train a deep model?
-Training involes two files: `train.py` and `augmentation/client.py`.
+Training involes two files: `train.py` and `augmentation/`.
 
-`train.py` will open a local network port waiting for data. 
-It trains the AudioNet once it gets a data source.
+`$ python -m augmentation` will start a augmentation server that provide train data and test data.
+`train.py` will connect to augmentation server and request data.
 
-`client.py` is the data source. It reads wave files and performs data augmentation.
+`augmentation/config.py` is used for configuring the batch size/thread size/data source/...
 
 Before training, there are several things you should do.
 
@@ -27,15 +27,17 @@ Before training, there are several things you should do.
 * split data into two part: train, validate
 * put train data into `data/train/`
 * put validate data into `data/test/`
-
+* NOTE: the wav file must be encoded by 16 bit signed integer, mono-channeled and at a sampling rate of 16000.
+* see [audioPlot](htttp://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioPlot) for converting tools.
 ## step 2.2 data augmentation.
 * gain `sox` from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
 * extract zip file into the `sox` folder. __so that there exists `sox/sox.exe`__.
 
 ## Step 2.3 How to Run training process?
-server side: `$python ./train.py`
+server side: `$python -m augmentation`
+client side: `$python train.py`
 
-client side: `$python ./client.py` (in './augumentation' folder)
+* NOTE: run it from the folder `audioNet`
 
 ** Resume a interrupted training process.
 You can resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
@@ -63,7 +65,7 @@ modify `webfront.py`, change `MODEL_ID` to yours.
 # Step 5. How to deploy your model in mobile? 
 *  Convert model file *.h5 to *.pb file 
 *  Place your *.pb file where you want to deploy.
-*  See Android mobile example: [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioNet)
+*  See Android mobile example: [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/androidAudioRecg)
 
 `$ python ./create_pb.py  XX`
 

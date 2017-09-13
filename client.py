@@ -23,9 +23,9 @@ channel = grpc.insecure_channel(
 stub = augGrpc.DataProviderStub(channel)
 
 empty = augPb.Empty()
-print(stub.GetStatus(empty))
+#print(stub.GetStatus(empty))
 
-#print(stub.Control(CS(sign = CS.START)))
+print(stub.Control(CS(sign = CS.START)))
 #print(stub.Control(CS(sign = CS.STOP)))
 time.sleep(0.5)
 exit()
