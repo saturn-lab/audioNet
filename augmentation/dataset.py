@@ -6,7 +6,7 @@ import sys
 import glob
 import numpy as np
 
-import config
+from . import config
 
 class Auxiliary:
   ME_DIR = os.path.dirname(os.path.realpath(__file__))

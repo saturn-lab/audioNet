@@ -13,9 +13,9 @@ import random
 import numpy as np
 
 
-from soxAlter import soxAlter
-from dataset import Dataset
-from backgroundAlter import bgnAlter
+from .soxAlter import soxAlter
+from .dataset import Dataset
+from .backgroundAlter import bgnAlter
 
 TMP_DIR = os.path.dirname(os.path.realpath(__file__))
 TMP_DIR = os.path.join(TMP_DIR, 'tmp')

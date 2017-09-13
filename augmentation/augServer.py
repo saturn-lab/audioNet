@@ -21,11 +21,11 @@ import queue
 import zlib
 from concurrent.futures import ThreadPoolExecutor
 
-import augServer_pb2_grpc as augGrpc
-import augServer_pb2 as augPb
-import config
+from . import augServer_pb2_grpc as augGrpc
+from . import augServer_pb2 as augPb
+from . import config
 
-from augmentor import Augmentor
+from .augmentor import Augmentor
 
 class Auxiliary:
   @staticmethod
@@ -152,8 +152,14 @@ class DataProvider(augGrpc.DataProviderServicer):
     self.running = False
 
     # batch_size, thread_size, qsize
-    self.train = DataQueue(32, 4, 10)
-    self.test = DataQueue(10, 1, 10)
+    self.train = DataQueue(
+        config.TRAIN_BATCH_SIZE, 
+        config.TRAIN_THREAD_SIZE, 
+        config.TRAIN_QUEUE_SIZE)
+    self.test = DataQueue(
+        config.TEST_BATCH_SIZE, 
+        config.TEST_THREAD_SIZE, 
+        config.TEST_QUEUE_SIZE)
 
     self.pool = Auxiliary.getThreadPool(self)
     return
