@@ -23,6 +23,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from . import augServer_pb2_grpc as augGrpc
 from . import augServer_pb2 as augPb
+from .augServer_pb2 import ControlSignal as CS
 from . import config
 
 from .augmentor import Augmentor
@@ -130,7 +131,6 @@ class Handler:
     if Handler.HANDLER is not None:
       return Handler.HANDLER
 
-    from augServer_pb2 import ControlSignal as CS
     handler = {}
     handler[CS.SETTING]             = Handler.settingHandler
     handler[CS.START]               = Handler.startHandler
