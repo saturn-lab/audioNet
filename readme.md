@@ -38,7 +38,7 @@ Before training, there are several things you should do.
 * put validate data into `data/test/`
 
 * NOTE: the wav file must be encoded by 16 bit signed integer, mono-channeled and at a sampling rate of 16000.
-* see [audioPlot](htttp://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioPlot) for converting tools.
+* see [audioPlot](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioPlot) for converting tools.
 
 ## step 2.2 data augmentation.
 * gain `sox` from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
