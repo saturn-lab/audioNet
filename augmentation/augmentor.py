@@ -58,7 +58,7 @@ class Augmentor:
     batch = random.sample(data_list, size)
     wavs = [self.augWave(f, is_train) for f in batch]
 
-    return pack(wavs), Dataset.NamesToLabel(data_list)
+    return pack(wavs), Dataset.NamesToLabel(batch)
 
   def getTrainBatch(self, size):
     return self.getBatch(size, Dataset.TRAIN_LIST)
