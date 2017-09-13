@@ -12,6 +12,15 @@ Convert recorded audio files to *.wav files
 
 `$ python ./convert_file.py  ../../data`
 
+## Step 1.4 Install Grpc
+The data augmentation server is implemented by grpc.
+
+`$ pip install grpcio`
+
+or for some version of python3
+
+`$ pip3 install grpcio`
+
 # Step 2. How to train a deep model?
 Training involes two files: `train.py` and `augmentation/`.
 
