@@ -56,6 +56,9 @@ def _norm():
     chain += 'norm %s'%dbL
     return chain
 
+def _encoding():
+    return ' -r 16k -e signed -b 16 '
+    
 def soxAlter(filename, outname):
     chain = ' -V1 %s  %s'%(filename, outname)
     chain = SOX_PATH + chain
@@ -66,7 +69,7 @@ def soxAlter(filename, outname):
     chain += _echo()
     chain += _bandpass()
     chain += _norm()
-    
+    chain += _encoding()
     # execute
     return subprocess.call(chain, shell=True)
 
