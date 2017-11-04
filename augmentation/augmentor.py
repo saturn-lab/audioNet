@@ -13,7 +13,7 @@ import random
 import numpy as np
 
 
-from .soxAlter import soxAlter
+from .soxAlter import soxAlter, noAlter
 from .dataset import Dataset
 from .backgroundAlter import bgnAlter
 
@@ -42,7 +42,7 @@ class Augmentor:
     if is_train:
       soxAlter(fin, fout)
     else:
-      fout = fin
+      noAlter(fin, fout)
       
     with wave.open(fout, 'rb') as f:
       data = f.readframes(f.getnframes())
