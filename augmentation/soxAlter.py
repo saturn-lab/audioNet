@@ -70,3 +70,7 @@ def soxAlter(filename, outname):
     # execute
     return subprocess.call(chain, shell=True)
 
+def noAlter(filename, outname):
+    chain = ' -r 16k -e signed -b 16 -V1 %s %s'%(filename. outname)
+    chain = SOX_PATH + chain
+    return subprocess.call(chain, shell=True)
