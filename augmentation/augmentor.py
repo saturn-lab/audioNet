@@ -54,7 +54,7 @@ class Augmentor:
     
     return data
   
-  def getBatch(self, size, data_list, is_train = True):
+  def getBatch(self, size, data_list, is_train = False):
     batch = random.sample(data_list, size)
     wavs = [self.augWave(f, is_train) for f in batch]
 
