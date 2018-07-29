@@ -12,7 +12,7 @@ NAME_TO_ID = {
     'h': 12, 'hh': 13, 'i': 14, 'ii': 15, 'iii': 16, 'iiii': 17, 
     'j': 18, 'jj': 19, 'k': 20, 'l': 21, 'll': 22, 'lll': 23}
 
-FFMPEG_COMMAND = FFMPEG_PATH + ' -i %s -ac 1 -acodec pcm_f32le -ar 44100 %s -v 1'
+FFMPEG_COMMAND = FFMPEG_PATH + ' -i %s -ac 1 -acodec pcm_f32le -ar 16000 %s -v 1'
 
 def ConvertFile(audio, itr, dir_out):
   fname = os.path.basename(audio)
