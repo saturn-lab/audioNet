@@ -4,13 +4,18 @@
 * extract the zip file into `ffmpeg` folder, __so that there exists `ffmpeg/bin/ffmeg.exe`__.
 
 ## Step 1.2 Get SOX
-* Download sox from SOund eXchange, you should get a zip file.
-* extract zip file into the sox folder. so that there exists sox/sox.exe.
+* Download sox from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
+* extract zip file into the sox folder. so that there exists `sox/sox.exe`.
 
 ## Step 1.3 Data preparation
 Convert recorded audio files to *.wav files
 
-`$ python ./convert_file.py  ../../data`
+`$ python ./convert_file.py  <Data Folder>`
+
+The `Data Folder` should contains many subfolders where your audios files reside. Typically, one of your audio file could be `<Data Folder>/group1/0001.mp3`.
+
+The results of conversion are within `./data/train/`. Your should manually move some of them to `./data/test` to accomplish `training-validation` separation. 
+The fraction of moved files depends on yourself.
 
 ## Step 1.4 Install Grpc
 The data augmentation server is implemented by grpc.
@@ -32,26 +37,28 @@ Training involes two files: `train.py` and `augmentation/`.
 Before training, there are several things you should do.
 
 ## Step 2.1 data placement.
-* convert raw audio files to uniformed *.wave files for training. 
-* split data into two part: train, validate
+You have done it in `Data preparation`. Now check it again.
+
 * put train data into `data/train/`
 * put validate data into `data/test/`
 
 * NOTE: the wav file must be encoded by 16 bit signed integer, mono-channeled and at a sampling rate of 16000.
-* see [audioPlot](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/audioPlot) for converting tools.
+* You should got things correct if you obtained them from `convert_file.py`
 
 ## step 2.2 data augmentation.
-* gain `sox` from [SOund eXchange](https://sourceforge.net/projects/sox/files/sox/14.4.2/), you should get a zip file.
-* extract zip file into the `sox` folder. __so that there exists `sox/sox.exe`__.
+* You should got sox in `sox/`, now check it again.
 
 ## Step 2.3 How to Run training process?
 server side: `$python -m augmentation`
+* this will start an augmentation server utilizing `sox`.
+
 client side: `$python train.py`
+* this will start trainig with data requested from augmentation server.
 
 * NOTE: run it from the folder `audioNet`
 
 ** Resume a interrupted training process.
-You can resume from certain checkpoint, modify the last line of `train.py`, change `-1` to your start point.
+You can resume from certain checkpoint, modify the last line of `train.py`, set `-1`(Negtive 1) as your start point.
 
 # Step 3. Evaluate a trained models
 ## Step 3.1 Select Checkpoint for Evaluation
@@ -68,15 +75,11 @@ open a web browser and input URL:http://127.0.0.1:5000/predict.
 modify `webfront.py`, change `MODEL_ID` to yours.
 
 # Step 4. How to deploy your model in Web Server?   
-*  Modify webfront.py, change "MODEL_ID=XX".
-*  start a web server andand input URL: http://127.0.0.1:5000/predict. 
-
-`$ python ./webfront.py`
+See `Run python webfront.py`
 
 # Step 5. How to deploy your model in mobile? 
-*  Convert model file *.h5 to *.pb file 
-*  Place your *.pb file where you want to deploy.
-*  See Android mobile example: [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/androidAudioRecg)
+* Choose an `ID` of checkpoint by yourself from `models/save_<ID>.h5`.
+* Run `$ python ./create_pb.py  <ID>`.  This will create file `models/model.pb`
+*  Place your model.pb file where you want to deploy. Typically, see Android mobile example: [androidAudioRecg](http://gitlab.icenter.tsinghua.edu.cn/saturnlab/androidAudioRecg)
 
-`$ python ./create_pb.py  XX`
 
