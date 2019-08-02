@@ -2,11 +2,13 @@
 
 import tensorflow as tf
 import numpy
-from fourierWeight import fourierLayer, fourierLayerShape, fourierWeight
 
+from fourierWeight import fourierLayer, fourierLayerShape, fourierWeight
+import tensorflow.keras
 from keras.models import Model
 from keras.regularizers import l2
 from keras.optimizers import Adam
+
 from keras.layers import (
     Input, 
     Dense, 
@@ -29,16 +31,23 @@ def KerasModel(isCompile=True):
     In = Input(shape=(None, 1, 1))
     x = Lambda(fourierLayer, output_shape=fourierLayerShape)(In)
     #x = Convolution2D(32, 7, 7, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(32, (7, 7), activation='relu', subsample=(3,3), W_regularizer=l2(L2_RATE))(x)
+   
+   
+    x = Conv2D(32, (7, 7), activation='relu', strides=(3,3),kernel_regularizer=l2(L2_RATE))(x)
+     
+    #x=Conv2D(32, kernel_size=(7, 7), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(64, 7, 5, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(64, (7, 5), activation='relu', subsample=(3,3),  W_regularizer=l2(L2_RATE))(x)    
+    x = Conv2D(64, (7, 5), activation='relu', strides=(3,3),kernel_regularizer=l2(L2_RATE))(x) 
+    #x=Conv2D(64, kernel_size=(7, 5), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(64, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(64, (3, 3), activation='relu', subsample=(2,2), W_regularizer=l2(L2_RATE))(x)    
+    x = Conv2D(64, (2,2), activation='relu', strides=(2,2),kernel_regularizer=l2(L2_RATE))(x)
+     #x=Conv2D(64, kernel_size=(3, 3), activation='relu')(x) 
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(32, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(32, (3, 3), activation='relu', subsample=(2,2), W_regularizer=l2(L2_RATE))(x)    
+    x = Conv2D(32, (2,2), activation='relu', strides=(2,2),kernel_regularizer=l2(L2_RATE))(x) 
+    # x=Conv2D(32, kernel_size=(3, 3), activation='relu')(x)  
     #x = Dropout(DROP_RATE)(x)
     
     freq, chan = x.get_shape()[2:4]
