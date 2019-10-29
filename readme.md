@@ -27,7 +27,7 @@ or for some version of python3
 `$ pip3 install grpcio`
 
 # Step 2. How to train a deep model?
-Training involes two files: `train.py` and `augmentation/`.
+Training involves two files: `train.py` and `augmentation/`.
 
 `$ python -m augmentation` will start a augmentation server that provide train data and test data.
 `train.py` will connect to augmentation server and request data.
