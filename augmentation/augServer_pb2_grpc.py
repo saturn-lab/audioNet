@@ -5,87 +5,87 @@ from . import augServer_pb2 as augServer__pb2
 
 
 class DataProviderStub(object):
-  """python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. ./augServer.proto
+    """python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. ./augServer.proto
 
-  """
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
     """
-    self.GetTrainData = channel.unary_unary(
-        '/augServer.DataProvider/GetTrainData',
-        request_serializer=augServer__pb2.Empty.SerializeToString,
-        response_deserializer=augServer__pb2.BatchData.FromString,
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+          channel: A grpc.Channel.
+        """
+        self.GetTrainData = channel.unary_unary(
+            '/augServer.DataProvider/GetTrainData',
+            request_serializer=augServer__pb2.Empty.SerializeToString,
+            response_deserializer=augServer__pb2.BatchData.FromString,
         )
-    self.GetTestData = channel.unary_unary(
-        '/augServer.DataProvider/GetTestData',
-        request_serializer=augServer__pb2.Empty.SerializeToString,
-        response_deserializer=augServer__pb2.BatchData.FromString,
+        self.GetTestData = channel.unary_unary(
+            '/augServer.DataProvider/GetTestData',
+            request_serializer=augServer__pb2.Empty.SerializeToString,
+            response_deserializer=augServer__pb2.BatchData.FromString,
         )
-    self.GetStatus = channel.unary_unary(
-        '/augServer.DataProvider/GetStatus',
-        request_serializer=augServer__pb2.Empty.SerializeToString,
-        response_deserializer=augServer__pb2.Status.FromString,
+        self.GetStatus = channel.unary_unary(
+            '/augServer.DataProvider/GetStatus',
+            request_serializer=augServer__pb2.Empty.SerializeToString,
+            response_deserializer=augServer__pb2.Status.FromString,
         )
-    self.Control = channel.unary_unary(
-        '/augServer.DataProvider/Control',
-        request_serializer=augServer__pb2.ControlSignal.SerializeToString,
-        response_deserializer=augServer__pb2.ControlResponse.FromString,
+        self.Control = channel.unary_unary(
+            '/augServer.DataProvider/Control',
+            request_serializer=augServer__pb2.ControlSignal.SerializeToString,
+            response_deserializer=augServer__pb2.ControlResponse.FromString,
         )
 
 
 class DataProviderServicer(object):
-  """python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. ./augServer.proto
+    """python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. ./augServer.proto
 
-  """
+    """
 
-  def GetTrainData(self, request, context):
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def GetTrainData(self, request, context):
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-  def GetTestData(self, request, context):
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def GetTestData(self, request, context):
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-  def GetStatus(self, request, context):
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def GetStatus(self, request, context):
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-  def Control(self, request, context):
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def Control(self, request, context):
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_DataProviderServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'GetTrainData': grpc.unary_unary_rpc_method_handler(
-          servicer.GetTrainData,
-          request_deserializer=augServer__pb2.Empty.FromString,
-          response_serializer=augServer__pb2.BatchData.SerializeToString,
-      ),
-      'GetTestData': grpc.unary_unary_rpc_method_handler(
-          servicer.GetTestData,
-          request_deserializer=augServer__pb2.Empty.FromString,
-          response_serializer=augServer__pb2.BatchData.SerializeToString,
-      ),
-      'GetStatus': grpc.unary_unary_rpc_method_handler(
-          servicer.GetStatus,
-          request_deserializer=augServer__pb2.Empty.FromString,
-          response_serializer=augServer__pb2.Status.SerializeToString,
-      ),
-      'Control': grpc.unary_unary_rpc_method_handler(
-          servicer.Control,
-          request_deserializer=augServer__pb2.ControlSignal.FromString,
-          response_serializer=augServer__pb2.ControlResponse.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'augServer.DataProvider', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
+    rpc_method_handlers = {
+        'GetTrainData': grpc.unary_unary_rpc_method_handler(
+            servicer.GetTrainData,
+            request_deserializer=augServer__pb2.Empty.FromString,
+            response_serializer=augServer__pb2.BatchData.SerializeToString,
+        ),
+        'GetTestData': grpc.unary_unary_rpc_method_handler(
+            servicer.GetTestData,
+            request_deserializer=augServer__pb2.Empty.FromString,
+            response_serializer=augServer__pb2.BatchData.SerializeToString,
+        ),
+        'GetStatus': grpc.unary_unary_rpc_method_handler(
+            servicer.GetStatus,
+            request_deserializer=augServer__pb2.Empty.FromString,
+            response_serializer=augServer__pb2.Status.SerializeToString,
+        ),
+        'Control': grpc.unary_unary_rpc_method_handler(
+            servicer.Control,
+            request_deserializer=augServer__pb2.ControlSignal.FromString,
+            response_serializer=augServer__pb2.ControlResponse.SerializeToString,
+        ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+        'augServer.DataProvider', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))

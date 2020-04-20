@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 # Classes: Augmentor
@@ -20,53 +19,55 @@ from .backgroundAlter import bgnAlter
 TMP_DIR = os.path.dirname(os.path.realpath(__file__))
 TMP_DIR = os.path.join(TMP_DIR, 'tmp')
 
-def pack(wavs):
-  data_len = [i.shape[0] for i in wavs]
-  dl_max = max(data_len)
-  
-  data = np.zeros(shape=[len(wavs), dl_max], dtype = np.float32)
-  for i, wav_i in enumerate(wavs):
-    data[i, - wav_i.shape[0]:] = wav_i
-    
-  data = data/32768.0
 
-  return data
+def pack(wavs):
+    data_len = [i.shape[0] for i in wavs]
+    dl_max = max(data_len)
+
+    data = np.zeros(shape=[len(wavs), dl_max], dtype=np.float32)
+    for i, wav_i in enumerate(wavs):
+        data[i, - wav_i.shape[0]:] = wav_i
+
+    data = data/32768.0
+
+    return data
+
 
 class Augmentor:
-  def __init__(self, index):
-    self.index = index
+    def __init__(self, index):
+        self.index = index
 
-  def augWave(self, fin, is_train):
-    fout = os.path.join(TMP_DIR, '%s.wav' % self.index)
-    
-    if is_train:
-      soxAlter(fin, fout)
-    else:
-      noAlter(fin, fout)
-      
-    with wave.open(fout, 'rb') as f:
-      data = f.readframes(f.getnframes())
-    data = np.frombuffer(data, np.int16)
-    data = data / 32768.0
+    def augWave(self, fin, is_train):
+        fout = os.path.join(TMP_DIR, '%s.wav' % self.index)
 
-    if is_train:
-      data = bgnAlter(data)
-    
-    return data
-  
-  def getBatch(self, size, data_list, is_train = False):
-    batch = random.sample(data_list, size)
-    wavs = [self.augWave(f, is_train) for f in batch]
+        if is_train:
+            soxAlter(fin, fout)
+        else:
+            noAlter(fin, fout)
 
-    return pack(wavs), Dataset.NamesToLabel(batch)
+        with wave.open(fout, 'rb') as f:
+            data = f.readframes(f.getnframes())
+        data = np.frombuffer(data, np.int16)
+        data = data / 32768.0
 
-  def getTrainBatch(self, size):
-    return self.getBatch(size, Dataset.TRAIN_LIST)
+        if is_train:
+            data = bgnAlter(data)
 
-  def getTestBatch(self, size):
-    return self.getBatch(size, Dataset.TEST_LIST, is_train = False)
+        return data
+
+    def getBatch(self, size, data_list, is_train=False):
+        batch = random.sample(data_list, size)
+        wavs = [self.augWave(f, is_train) for f in batch]
+
+        return pack(wavs), Dataset.NamesToLabel(batch)
+
+    def getTrainBatch(self, size):
+        return self.getBatch(size, Dataset.TRAIN_LIST)
+
+    def getTestBatch(self, size):
+        return self.getBatch(size, Dataset.TEST_LIST, is_train=False)
+
 
 if __name__ == '__main__':
-  a = Augmentor(1)
-  data, label = a.getTrainBatch(2)
-  
+    a = Augmentor(1)
+    data, label = a.getTrainBatch(2)
