@@ -17,7 +17,7 @@ Convert recorded audio files to *.wav files
 
 `$ python ./convert_file.py  <Data Folder>`
 
-The `Data Folder` should contains many subfolders where your audios files reside. Typically, one of your audio file could be `<Data Folder>/group1/0001.mp3`.
+The `Data Folder` should contains many subfolders where your audios files reside. Typically, one of your audio file could be `<Data Folder>/group1/a.mp3`.
 
 The results of conversion are within `./data/train/`. Your should manually move some of them to `./data/test` to accomplish `training-validation` separation. 
 The fraction of moved files depends on yourself.
