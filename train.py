@@ -24,7 +24,7 @@ def train(sp=-1):
         #按理说是按照上面的标准进行的，但是因为我们数据集较少，所以我们使用更多的数量跑
         #在测试的时候我运用的是14是完全按照理论做的
         #如果现在的次数不能够正常运行请重新改回14并增加时代
-        steps_per_epoch=3000，
+        steps_per_epoch=3000,
         #epochs 确定世代的次数
         epochs=epochs_time,
         verbose=1,

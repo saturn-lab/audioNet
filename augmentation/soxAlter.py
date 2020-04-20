@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 # Outer Dependency:
@@ -7,10 +6,9 @@
 import os, subprocess
 from  random import random, randint
 import sys
+from .config import SOX_PATH
 
 EF_RATE = 0.6
-SOX_PATH = os.path.dirname(os.path.realpath(__file__))
-SOX_PATH = os.path.join(SOX_PATH, '..', 'sox', 'sox')
 
 def _pitch():
     chain = ' '

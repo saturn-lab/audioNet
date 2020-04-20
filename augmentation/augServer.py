@@ -221,12 +221,14 @@ class DataProvider(augGrpc.DataProviderServicer):
     server.add_insecure_port('[::]:%d' % config.SERVER_PORT)
     server.start()
     try:
+      print('Server started at :%d' % config.SERVER_PORT)
       while True:
         time.sleep(99999)
     except KeyboardInterrupt:
       self.running = False
       self.pool.shutdown()
       server.stop(0)
+      print('Server stoped')
 
 if __name__ == '__main__':
   a = DataProvider()

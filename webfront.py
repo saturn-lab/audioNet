@@ -1,10 +1,10 @@
-#!/opt/anaconda3/bin/python
 # -*- coding:utf-8 -*-
 
 import os, sys, subprocess
+import numpy as np
 from flask import Flask, request, redirect, flash
 from werkzeug.utils import secure_filename
-import numpy
+from .user_config import FFMPEG_PATH
 
 sys.path.append('augmentation' + os.sep)
 
@@ -12,7 +12,6 @@ from wavReader import readWav
 from model import KerasModel
 
 UPLOAD_FOLDER = '.' + os.sep + 'tmp'
-FFMPEG_PATH='.' + os.sep + 'ffmpeg' + os.sep + 'bin' + os.sep + 'ffmpeg'
 MODEL_ID=60
 
 app = Flask(__name__)
@@ -26,7 +25,7 @@ def predict(wavfile, modelfile):
     modelA.load_weights(modelfile)
 
     result = modelA.predict(wav, 1)
-    return numpy.argmax(result, 1)[0]
+    return np.argmax(result, 1)[0]
 
 def command_exists(command):
     return subprocess.call('type ' + command, shell=True, 
