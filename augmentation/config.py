@@ -1,7 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 import os
+
+# SOX_PATH = os.path.dirname(os.path.realpath(__file__))
+# SOX_PATH = os.path.join(SOX_PATH, '..', 'sox', 'sox')
+SOX_PATH = 'sox'
 
 ME_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(ME_DIR, '..', 'data')

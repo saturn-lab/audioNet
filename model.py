@@ -10,12 +10,12 @@ from keras.regularizers import l2
 from keras.optimizers import Adam
 
 from keras.layers import (
-    Input, 
-    Dense, 
-#    Convolution2D, 
-    Conv2D, 
-    Lambda, 
-    Activation, 
+    Input,
+    Dense,
+    # Convolution2D,
+    Conv2D,
+    Lambda,
+    Activation,
     Flatten,
     Dropout,
     Bidirectional,
@@ -24,44 +24,48 @@ from keras.layers import (
     TimeDistributed
 )
 
-DROP_RATE=0.5
-L2_RATE=0.0001
+DROP_RATE = 0.5
+L2_RATE = 0.0001
+
 
 def KerasModel(isCompile=True):
     In = Input(shape=(None, 1, 1))
     x = Lambda(fourierLayer, output_shape=fourierLayerShape)(In)
     #x = Convolution2D(32, 7, 7, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
-   
-   
-    x = Conv2D(32, (7, 7), activation='relu', strides=(3,3),kernel_regularizer=l2(L2_RATE))(x)
-     
+
+    x = Conv2D(32, (7, 7), activation='relu', strides=(
+        3, 3), kernel_regularizer=l2(L2_RATE))(x)
+
     #x=Conv2D(32, kernel_size=(7, 7), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(64, 7, 5, subsample=(3,3), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(64, (7, 5), activation='relu', strides=(3,3),kernel_regularizer=l2(L2_RATE))(x) 
+    x = Conv2D(64, (7, 5), activation='relu', strides=(
+        3, 3), kernel_regularizer=l2(L2_RATE))(x)
     #x=Conv2D(64, kernel_size=(7, 5), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(64, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(64, (2,2), activation='relu', strides=(2,2),kernel_regularizer=l2(L2_RATE))(x)
-     #x=Conv2D(64, kernel_size=(3, 3), activation='relu')(x) 
+    x = Conv2D(64, (2, 2), activation='relu', strides=(
+        2, 2), kernel_regularizer=l2(L2_RATE))(x)
+    #x=Conv2D(64, kernel_size=(3, 3), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     #x = Convolution2D(32, 3, 3, subsample=(2,2), activation='relu', W_regularizer=l2(L2_RATE))(x)
-    x = Conv2D(32, (2,2), activation='relu', strides=(2,2),kernel_regularizer=l2(L2_RATE))(x) 
-    # x=Conv2D(32, kernel_size=(3, 3), activation='relu')(x)  
+    x = Conv2D(32, (2, 2), activation='relu', strides=(
+        2, 2), kernel_regularizer=l2(L2_RATE))(x)
+    # x=Conv2D(32, kernel_size=(3, 3), activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
-    
+
     freq, chan = x.get_shape()[2:4]
     x = TimeDistributed(Reshape([int(freq)*int(chan)]))(x)
-    
+
     x = Bidirectional(LSTM(128, ))(x)
-    
+
     #x = Dropout(DROP_RATE)(x)
     x = Dense(64, activation='relu')(x)
     #x = Dropout(DROP_RATE)(x)
     x = Dense(24, activation='softmax')(x)
-    
+
     model = Model(inputs=In, outputs=x)
-    
+
     if isCompile:
         opt = Adam(1e-4)
         model.compile(
@@ -72,6 +76,7 @@ def KerasModel(isCompile=True):
 
     return model
 
+
 if __name__ == '__main__':
-    #model()
+    # model()
     KerasModel()

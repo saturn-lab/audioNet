@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = true
+
+[dev-packages]
+autopep8 = "*"
+
+[packages]
+tensorflow = "==1.15.2"
+keras = "*"
+grpcio = "*"
+flask = "*"
+
+[requires]
+python_version = "3.7"
