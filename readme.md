@@ -2,7 +2,9 @@
 
 ## Step 1.0 Install Tensorflow and Keras
 
-`$ pip install tensorflow==1.9 keras==2.1.5`
+* Original version: `pip install tensorflow==1.9 keras==2.1.5`
+* Updated 2020.04.20: `pip install tensorflow==1.15.2 keras`
+* or `pipenv install` is you have `pipenv`
 
 ## Step 1.1 Get FFMPEG
 * Download ffmpeg from [ffmpeg](http://ffmpeg.zeranoe.com/builds/), you should select `Static` linking and get a zip file.

@@ -8,7 +8,7 @@ import subprocess
 import numpy as np
 from flask import Flask, request, redirect, flash
 from werkzeug.utils import secure_filename
-from .user_config import FFMPEG_PATH
+from user_config import FFMPEG_PATH
 
 sys.path.append('augmentation' + os.sep)
 
